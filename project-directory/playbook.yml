@@ -1,6 +1,6 @@
 ---
 - name: Deploy and Configure Apache Virtual Hosts
-  hosts: your_target_hosts
+  hosts: all
   become: yes
   vars:
     vhosts:
