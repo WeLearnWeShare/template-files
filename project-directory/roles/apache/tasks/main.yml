@@ -1,7 +1,7 @@
 ---
 - name: Install Apache
-  apt:
-    name: apache2
+  yum:
+    name: httpd
     state: present
 
 - name: Deploy Apache Virtual Hosts Configuration
