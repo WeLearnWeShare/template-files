@@ -1,0 +1,24 @@
+---
+- name: Deploy and Configure Apache Virtual Hosts
+  hosts: your_target_hosts
+  become: yes
+  vars:
+    vhosts:
+      - server_name: "example.com"
+        port: 80
+        document_root: "/var/www/html/example"
+        ssl_enabled: false
+        directory_indexes_disabled: true
+        error_log: "/var/log/httpd/example_error.log"
+        access_log: "/var/log/httpd/example_access.log"
+      - server_name: "secure.example.com"
+        port: 443
+        document_root: "/var/www/html/secure_example"
+        ssl_enabled: true
+        ssl_certificate_file: "/etc/ssl/certs/secure_example.pem"
+        ssl_certificate_key_file: "/etc/ssl/private/secure_example.key"
+        directory_indexes_disabled: false
+        error_log: "/var/log/httpd/secure_example_error.log"
+        access_log: "/var/log/httpd/secure_example_access.log"
+  roles:
+    - apache

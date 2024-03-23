@@ -1,0 +1,16 @@
+---
+- name: Install Apache
+  apt:
+    name: apache2
+    state: present
+
+- name: Deploy Apache Virtual Hosts Configuration
+  template:
+    src: vhosts.conf.j2
+    dest: /etc/apache2/sites-available/000-default.conf
+  notify: restart apache
+
+- name: Deploy Default HTML Page
+  copy:
+    src: default.html
+    dest: "/var/www/html/index.html"
