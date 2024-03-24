@@ -1,16 +1,16 @@
 ---
 - name: Install Apache
-  yum:
+  ansible.builtin.yum:
     name: httpd
     state: present
 
-- name: Deploy Apache Virtual Hosts Configuration
-  template:
-    src: vhosts.conf.j2
-    dest: /etc/apache2/sites-available/000-default.conf
+- name: Configure Apache
+  ansible.builtin.template:
+    src: apache.conf.j2
+    dest: /etc/httpd/conf/httpd.conf
   notify: restart apache
 
-- name: Deploy Default HTML Page
-  copy:
+- name: Deploy default webpage
+  ansible.builtin.copy:
     src: default.html
-    dest: "/var/www/html/index.html"
+    dest: /var/www/html/index.html
