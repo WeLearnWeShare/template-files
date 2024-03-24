@@ -1,31 +1,8 @@
-# Ensure mod_ssl is enabled if any vhosts require SSL
-{% if vhosts | selectattr("ssl_enabled", "equalto", true) | list | length > 0 %}
-LoadModule ssl_module modules/mod_ssl.so
-{% endif %}
+ServerName localhost
+Listen 80
 
-{% for vhost in vhosts %}
-<VirtualHost *:{{ vhost.port }}>
-    ServerName {{ vhost.server_name }}
-    DocumentRoot "{{ vhost.document_root }}"
-    
-    <Directory "{{ vhost.document_root }}">
-        AllowOverride All
-        Require all granted
-    </Directory>
-
-    {% if vhost.ssl_enabled %}
-    SSLEngine on
-    SSLCertificateFile {{ vhost.ssl_certificate_file }}
-    SSLCertificateKeyFile {{ vhost.ssl_certificate_key_file }}
-    {% endif %}
-    
-    {% if vhost.directory_indexes_disabled %}
-    Options -Indexes
-    {% else %}
-    Options +Indexes
-    {% endif %}
-    
-    ErrorLog {{ vhost.error_log }}
-    CustomLog {{ vhost.access_log }} common
-</VirtualHost>
-{% endfor %}
+DocumentRoot "/var/www/html"
+<Directory "/var/www/html">
+    AllowOverride None
+    Require all granted
+</Directory>
